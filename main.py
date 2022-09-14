@@ -75,16 +75,14 @@ async def handle_form(name:str=Form(),fathers_name_or_husbands_name:str=Form(),f
 
  doc.render(context)
  
- img_tag = re.compile(r'%\(signature\)s') # declare pattern
+ img_tag = re.compile(r'%') # declare pattern
  #STEP 1 
  for _p in enumerate(doc.paragraphs): 
-  
-  #print(_p[1].text)
+
   img_paragraph = None
   if bool(img_tag.match(_p[1].text)): 
         
        img_paragraph = _p[1] 
-       #print(img_paragraph)
  #STEP 2
        temp_text = img_tag.split(img_paragraph.text)
        print(temp_text)
@@ -92,9 +90,7 @@ async def handle_form(name:str=Form(),fathers_name_or_husbands_name:str=Form(),f
        _r = img_paragraph.add_run()
        _r.add_picture(file_location, width = Inches(1.25))
        img_paragraph.add_run(temp_text[1])
-       # p = img_paragraph._element
-       # p.getparent().remove(p)
-       # p._p = p._element = None 
+       
 
        
  doc.save(f"./{context['name']}-form2.docx")
